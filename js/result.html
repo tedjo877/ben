@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediksi Togel Berdasarkan Data Simulasi</title>
+</head>
+<body>
+  <h1>Prediksi Togel</h1>
+
+  <label for="pasaran">Pilih Pasaran:</label>
+  <select id="pasaran">
+    <option value="hongkong">Hongkong</option>
+    <option value="sydney">Sydney</option>
+    <option value="singapore">Singapore</option>
+  </select><br><br>
+
+  <button onclick="generate()">Generate Prediksi</button>
+
+  <h2>Hasil Prediksi:</h2>
+  <p id="hasil"></p>
+
+  <script>
+    // Fungsi untuk menghasilkan data hasil togel secara acak
+    function getSimulatedResult() {
+      const result = [];
+      for (let i = 0; i < 4; i++) {
+        result.push(Math.floor(Math.random() * 10));
+      }
+      return result.join('');
+    }
+
+    // Fungsi untuk menghasilkan prediksi berdasarkan hasil simulasi
+    function generatePrediction(result, pasaran) {
+      let d1 = parseInt(result[0]);
+      let d2 = parseInt(result[1]);
+      let d3 = parseInt(result[2]);
+      let d4 = parseInt(result[3]);
+
+      let twoD, threeD, fourD;
+
+      if (pasaran === "sydney") {
+        twoD = (d4 + d2 * 3) % 100;
+        threeD = (d1 * 100 + d3 * 10 + d2) % 1000;
+        fourD = (d1 + d2 + d3 + d4) * 3 % 10000;
+      } else if (pasaran === "singapore") {
+        twoD = (d1 + d3 * 2) % 100;
+        threeD = (d4 * 10 + d2 * 2 + d1) % 1000;
+        fourD = (d4 * d3 + d2 * d1) % 10000;
+      } else if (pasaran === "hongkong") {
+        twoD = (d2 + d4 * 2) % 100;
+        threeD = (d3 * 2 + d1 * 10 + d4) % 1000;
+        fourD = ((d1 + d2) * (d3 + d4)) % 10000;
+      }
+
+      return {
+        "2D": twoD.toString().padStart(2, '0'),
+        "3D": threeD.toString().padStart(3, '0'),
+        "4D": fourD.toString().padStart(4, '0')
+      };
+    }
+
+    // Fungsi utama untuk menghasilkan prediksi
+    function generate() {
+      const pasaran = document.getElementById('pasaran').value;
+      const simulatedResult = getSimulatedResult();
+      const prediction = generatePrediction(simulatedResult, pasaran);
+      const output = document.getElementById('hasil');
+
+      output.innerHTML = `
+        Hasil Simulasi: ${simulatedResult} <br>
+        Pasaran: <strong>${pasaran.toUpperCase()}</strong><br>
+        2D: ${prediction["2D"]} <br>
+        3D: ${prediction["3D"]} <br>
+        4D: ${prediction["4D"]}
+      `;
+    }
+  </script>
+</body>
+</html>
