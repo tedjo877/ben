@@ -4,7 +4,6 @@ type = "javascript"
 workers_dev = true
 compatibility_date = "2024-03-20"
 usage_model = "unbound"
-account_id = "83ee0f64372d834fc2b99ca2d33f1414"
 
 [[routes]]
 pattern = "privasi.xhamster.biz.id"
